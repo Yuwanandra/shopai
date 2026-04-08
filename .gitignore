@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Environment variables - NEVER commit these
+.env
+backend/.env
+frontend/.env
+
+# Build output
+dist/
+build/
+
+# Uploads
+backend/uploads/
+
+# Misc
+.DS_Store
+*.zip
+shopai.zip
