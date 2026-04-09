@@ -6,6 +6,7 @@ import { useAuthStore, useCartStore, useUIStore } from '../../store';
 import toast from 'react-hot-toast';
 import api from '../../lib/api';
 import CurrencySwitcher from '../ui/CurrencySwitcher';
+import LanguageSwitcher from '../ui/LanguageSwitcher';
 
 export default function Navbar() {
   const navigate      = useNavigate();
@@ -86,6 +87,7 @@ export default function Navbar() {
               { to: '/',      label: 'Home' },
               { to: '/shop',  label: 'Shop' },
               { to: '/about', label: 'About' },
+              { to: '/help',  label: 'Help' },
             ].map(({ to, label }) => (
               <Link
                 key={to} to={to}
@@ -123,6 +125,9 @@ export default function Navbar() {
           <div className="flex items-center gap-1">
             {/* Currency Switcher */}
             <CurrencySwitcher />
+
+            {/* Language Switcher */}
+            <LanguageSwitcher />
 
             {/* Mobile search */}
             <button

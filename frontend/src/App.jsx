@@ -14,6 +14,7 @@ import CheckoutPage  from './pages/CheckoutPage';
 import AccountPage   from './pages/AccountPage';
 import OrdersPage    from './pages/OrdersPage';
 import AboutPage     from './pages/AboutPage';
+import HelpPage      from './pages/HelpPage';
 import LoginPage     from './pages/LoginPage';
 import RegisterPage  from './pages/RegisterPage';
 import AdminPage     from './pages/AdminPage';
@@ -56,6 +57,7 @@ export default function App() {
           <Route path="/product/:slug"  element={<ProductPage />} />
           <Route path="/cart"        element={<CartPage />} />
           <Route path="/about"       element={<AboutPage />} />
+          <Route path="/help"        element={<HelpPage />} />
           <Route path="/login"       element={user ? <Navigate to="/" /> : <LoginPage />} />
           <Route path="/register"    element={user ? <Navigate to="/" /> : <RegisterPage />} />
 

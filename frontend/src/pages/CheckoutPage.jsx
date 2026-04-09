@@ -3,15 +3,19 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { MapPin, CreditCard, CheckCircle } from 'lucide-react';
 import { useCartStore, useAuthStore } from '../store';
+import { useLanguageStore } from '../store/language';
 import api from '../lib/api';
 import toast from 'react-hot-toast';
+import MapLocationPicker from '../components/ui/MapLocationPicker';
 
 export default function CheckoutPage() {
   const navigate  = useNavigate();
   const location  = useLocation();
   const { user }  = useAuthStore();
   const { items, clearCart } = useCartStore();
+  const { t } = useLanguageStore();
   const couponCode = location.state?.coupon_code;
+  const [showMap, setShowMap] = useState(false);
 
   const [form, setForm] = useState({
     full_name:    user?.full_name || '',
@@ -81,6 +85,21 @@ export default function CheckoutPage() {
 
   return (
     <div className="pt-20 min-h-screen bg-cream">
+      {/* Map Modal */}
+      {showMap && (
+        <MapLocationPicker
+          onSelect={(loc) => {
+            setForm(f => ({
+              ...f,
+              address:     loc.address,
+              city:        loc.city        || f.city,
+              postal_code: loc.postal_code || f.postal_code,
+            }));
+            toast.success('Location pinned! ✅');
+          }}
+          onClose={() => setShowMap(false)}
+        />
+      )}
       <div className="max-w-5xl mx-auto px-6 py-12">
         <h1 className="section-title mb-10">Checkout</h1>
         <form onSubmit={handleSubmit}>
@@ -89,8 +108,18 @@ export default function CheckoutPage() {
             <div className="lg:col-span-3 space-y-6">
               <div className="bg-white rounded-3xl p-6 shadow-sm">
                 <h2 className="font-semibold text-base flex items-center gap-2 mb-5">
-                  <MapPin size={18} className="text-coral" /> Shipping Address
+                  <MapPin size={18} className="text-coral" /> {t('shipping_address')}
                 </h2>
+
+                {/* Map pin button */}
+                <button
+                  type="button"
+                  onClick={() => setShowMap(true)}
+                  className="w-full flex items-center justify-center gap-2 border-2 border-dashed border-coral/30 bg-coral/5 hover:bg-coral/10 text-coral rounded-2xl py-3 text-sm font-medium transition-all mb-5"
+                >
+                  <MapPin size={16} />
+                  {t('pin_location')}
+                </button>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
                     { key: 'full_name', label: 'Full Name', col: 2 },
