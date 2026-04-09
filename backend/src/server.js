@@ -51,23 +51,6 @@ if (process.env.NODE_ENV !== 'test') app.use(morgan('dev'));
 // ── Static uploads ──────────────────────────────────────────
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
-// ── Rate limiting ───────────────────────────────────────────
-const limiter = rateLimit({
-  windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS) || 15 * 60 * 1000,
-  max:      parseInt(process.env.RATE_LIMIT_MAX) || 1000,
-  standardHeaders: true,
-  legacyHeaders:   false,
-  validate: { xForwardedForHeader: false },
-});
-app.use('/api/', limiter);
-
-// Stricter limit on AI endpoint
-const aiLimiter = rateLimit({
-  windowMs: 60_000,
-  max: 20,
-  validate: { xForwardedForHeader: false },
-});
-app.use('/api/ai', aiLimiter);
 
 // ── Routes ──────────────────────────────────────────────────
 app.use('/api/auth',            authRoutes);
