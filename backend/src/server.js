@@ -91,7 +91,11 @@ app.use((err, _req, res, _next) => {
   });
 });
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 ShopAI API running on port ${PORT}`));
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => console.log(`🚀 ShopAI API running on port ${PORT}`));
+}
 
+// For Vercel serverless - export the app
 module.exports = app;
