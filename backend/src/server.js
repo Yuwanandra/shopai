@@ -23,6 +23,9 @@ const wishlistRoutes    = require('./routes/wishlists');
 
 const app = express();
 
+// Trust Vercel's proxy
+app.set('trust proxy', 1);
+
 // ── Security ────────────────────────────────────────────────
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 
@@ -54,11 +57,16 @@ const limiter = rateLimit({
   max:      parseInt(process.env.RATE_LIMIT_MAX) || 200,
   standardHeaders: true,
   legacyHeaders:   false,
+  validate: { xForwardedForHeader: false },
 });
 app.use('/api/', limiter);
 
 // Stricter limit on AI endpoint
-const aiLimiter = rateLimit({ windowMs: 60_000, max: 20 });
+const aiLimiter = rateLimit({
+  windowMs: 60_000,
+  max: 20,
+  validate: { xForwardedForHeader: false },
+});
 app.use('/api/ai', aiLimiter);
 
 // ── Routes ──────────────────────────────────────────────────
