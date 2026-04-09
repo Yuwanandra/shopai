@@ -50,7 +50,7 @@ module.exports.couponRouter = couponRouter;
 
 // ── users.js ─────────────────────────────────────────────────
 const userRouter = express.Router();
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 userRouter.get('/profile', authenticate, async (req, res) => {
   const { rows } = await db.query(
