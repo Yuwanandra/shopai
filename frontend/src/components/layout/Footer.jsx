@@ -80,13 +80,22 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-white/10 py-5">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/30">
-          <span>© {new Date().getFullYear()} ShopAI. All rights reserved.</span>
-          <span className="flex items-center gap-1.5">
-            Made with <Heart size={11} className="text-coral fill-coral" /> in Indonesia by Yuwanandra
-          </span>
-        </div>
-      </div>
+  <div className="max-w-7xl mx-auto px-6 flex flex-col items-center gap-3 text-xs text-white/30 text-center">
+    {/* Disclaimer */}
+    <div className="bg-white/5 border border-white/10 rounded-xl px-6 py-3 max-w-3xl text-white/40 leading-relaxed">
+      ⚠️ <strong className="text-white/60">Demo Project Disclaimer:</strong> ShopAI is a portfolio demonstration project only. 
+      This is <strong className="text-white/60">NOT</strong> a real e-commerce platform. All transactions are 
+      <strong className="text-white/60"> simulated</strong> using Midtrans Sandbox — no real money is charged. 
+      No real products are sold. This project is built for educational and portfolio purposes only and has no legal commercial standing.
+    </div>
+    <div className="flex flex-col sm:flex-row items-center justify-between w-full gap-3">
+      <span>© {new Date().getFullYear()} ShopAI. All rights reserved.</span>
+      <span className="flex items-center gap-1.5">
+        Made with <Heart size={11} className="text-coral fill-coral" /> in Indonesia by Yuwanandra
+      </span>
+    </div>
+  </div>
+</div>
     </footer>
   );
 }
