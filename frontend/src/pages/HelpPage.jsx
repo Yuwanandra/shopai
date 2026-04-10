@@ -278,8 +278,8 @@ export default function HelpPage() {
 
                 <p className="text-center text-xs text-gray-400">
                   Or email us directly at{' '}
-                  <a href="mailto:hello@shopai.id" className="text-coral hover:underline font-medium">
-                    hello@shopai.id
+                  <a href="mailto:yuwanandrarisdyaksa7677@gmail.com" className="text-coral hover:underline font-medium">
+                    yuwanandrarisdyaksa7677@gmail.com
                   </a>
                 </p>
               </form>
