@@ -105,7 +105,7 @@ export default function HelpPage() {
     const res = await fetch('https://formspree.io/f/mlgoqgor', {
       method: 'POST',
       body:   formData,
-      headers: { 'Accept': 'application/json' },
+      
     });
 
     if (res.ok) {
