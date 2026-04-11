@@ -102,7 +102,7 @@ export default function HelpPage() {
     formData.append('message', form.message);
     if (form.file) formData.append('file', form.file);
 
-    const res = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+    const res = await fetch('https://formspree.io/f/mlgoqgor', {
       method: 'POST',
       body:   formData,
       headers: { 'Accept': 'application/json' },
