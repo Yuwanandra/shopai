@@ -88,19 +88,39 @@ export default function HelpPage() {
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
 
   const handleSend = async (e) => {
-    e.preventDefault();
-    if (!form.name || !form.email || !form.message) {
-      toast.error('Please fill in all required fields');
-      return;
+  e.preventDefault();
+  if (!form.name || !form.email || !form.message) {
+    toast.error('Please fill in all required fields');
+    return;
+  }
+  setSending(true);
+  try {
+    const formData = new FormData();
+    formData.append('name',    form.name);
+    formData.append('email',   form.email);
+    formData.append('subject', form.subject || 'General Inquiry');
+    formData.append('message', form.message);
+    if (form.file) formData.append('attachment', form.file);
+
+    const res = await fetch('https://formspree.io/f/mlgoqgor', {
+      method: 'POST',
+      body:   formData,
+      headers: { 'Accept': 'application/json' },
+    });
+
+    if (res.ok) {
+      toast.success(t('sent_success'));
+      setForm({ name: '', email: '', subject: '', message: '', file: null });
+      if (fileRef.current) fileRef.current.value = '';
+    } else {
+      throw new Error('Failed');
     }
-    setSending(true);
-    // Simulate sending (replace with actual email service like EmailJS or Formspree)
-    await new Promise(r => setTimeout(r, 1500));
+  } catch (err) {
+    toast.error('Failed to send. Please email us directly.');
+  } finally {
     setSending(false);
-    toast.success(t('sent_success'));
-    setForm({ name: '', email: '', subject: '', message: '', file: null });
-    if (fileRef.current) fileRef.current.value = '';
-  };
+  }
+};
 
   return (
     <div className="pt-20 min-h-screen page-enter">
