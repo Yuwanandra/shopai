@@ -100,9 +100,9 @@ export default function HelpPage() {
     formData.append('email',   form.email);
     formData.append('subject', form.subject || 'General Inquiry');
     formData.append('message', form.message);
-    if (form.file) formData.append('attachment', form.file);
+    if (form.file) formData.append('file', form.file);
 
-    const res = await fetch('https://formspree.io/f/mlgoqgor', {
+    const res = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
       method: 'POST',
       body:   formData,
       headers: { 'Accept': 'application/json' },
@@ -113,9 +113,11 @@ export default function HelpPage() {
       setForm({ name: '', email: '', subject: '', message: '', file: null });
       if (fileRef.current) fileRef.current.value = '';
     } else {
-      throw new Error('Failed');
+      const data = await res.json();
+      throw new Error(data.error || 'Failed');
     }
   } catch (err) {
+    console.error(err);
     toast.error('Failed to send. Please email us directly.');
   } finally {
     setSending(false);
